@@ -7,19 +7,29 @@ function buildMetadata(sample) {
     let metadata = data.metadata;
     // Filter the metadata for the object with the desired sample number
     let resultArray = metadata.filter((item) => item.id == sample);
-    let result = resultArray[0];
     // Use d3 to select the panel with id of `#sample-metadata`
     let panel = d3.select("#sample-metadata");
     // Use `.html("") to clear any existing metadata
     panel.html("");
     // Inside a loop, you will need to use d3 to append new
     // tags for each key-value in the filtered metadata.
-    Object.entries(result).forEach(([key, value]) => {
-      panel
-        .append("p")
-        .text(`${key.toUpperCase()}: ${value}`)
-        .style("font-size", "14px");
-    });
+    for (let item of resultArray) {
+      for (let key in item) {
+        panel
+          .append("p")
+          .text(`${key.toUpperCase()}: ${item[key]}`)
+          .style("font-size", "14px");
+      }
+    }
+    // Alternative Object.entries method for future studies
+    //---------------------------------------------------------
+    // Object.entries(resultArray).forEach(([key, value]) => {
+    //   panel
+    //     .append("p")
+    //     .text(`${key.toUpperCase()}: ${value}`)
+    //     .style("font-size", "14px");
+    // });
+    //---------------------------------------------------------
   });
 }
 
